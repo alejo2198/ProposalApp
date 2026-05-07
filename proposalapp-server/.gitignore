@@ -1,0 +1,70 @@
+# --- Build output ---
+[Bb]in/
+[Oo]bj/
+
+# --- User-specific files ---
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# --- Visual Studio ---
+.vs/
+*.rsuser
+*.vsp
+*.vspx
+
+# --- Rider ---
+.idea/
+*.DotSettings.user
+
+# --- NuGet ---
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!packages/repositories.config
+*.lock.json
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# --- Local publish output ---
+publish/
+PublishProfiles/
+
+# --- EF Core migrations temp ---
+*.mdf
+*.ldf
+*.ndf
+
+# --- Secrets & config overrides ---
+appsettings.local.json
+appsettings.Production.json
+secrets.json
+**/secrets.json
+
+# --- Test results ---
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# --- Coverage ---
+coverage/
+*.coverage
+*.coveragexml
+*.opencover.xml
+lcov.info
+
+# --- Logs ---
+*.log
+logs/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+docker-compose.override.yml
