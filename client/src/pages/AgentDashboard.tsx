@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import type { Listing, Offer } from "../types";
 import api from "../api/axios";
+import AgentListingCard from "../components/UI/Cards/AgentListingCard";
+import OfferCard from "../components/UI/Cards/OfferCard";
 
 interface Toast {
   id: number;
@@ -73,13 +75,6 @@ export default function AgentDashboard() {
     loadOffers(listingId);
   };
 
-  const statusColor = (status: string) => {
-    if (status === "Accepted") return "text-green-600 bg-green-50";
-    if (status === "Rejected") return "text-red-600 bg-red-50";
-    if (status === "Countered") return "text-yellow-600 bg-yellow-50";
-    return "text-blue-600 bg-blue-50";
-  };
-
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
       {/* Toast notifications */}
@@ -104,26 +99,12 @@ export default function AgentDashboard() {
           </h3>
           <div className="space-y-3">
             {listings.map((listing) => (
-              <div
+              <AgentListingCard
                 key={listing.id}
-                onClick={() => loadOffers(listing.id)}
-                className={`bg-white border rounded-xl p-4 cursor-pointer hover:border-blue-300 transition ${selectedListing === listing.id ? "border-blue-500 ring-1 ring-blue-500" : "border-gray-200"}`}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-medium text-gray-800">{listing.title}</p>
-                    <p className="text-sm text-gray-500">{listing.address}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-blue-600">
-                      ${listing.askingPrice.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {listing.offerCount} offers
-                    </p>
-                  </div>
-                </div>
-              </div>
+                listing={listing}
+                isSelected={selectedListing === listing.id}
+                onSelect={loadOffers}
+              />
             ))}
           </div>
         </div>
@@ -139,47 +120,16 @@ export default function AgentDashboard() {
                 <p className="text-gray-400 text-sm">No offers yet.</p>
               )}
               {offers[selectedListing].map((offer) => (
-                <div
+                <OfferCard
                   key={offer.id}
-                  className="bg-white border border-gray-200 rounded-xl p-4"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <p className="font-medium text-gray-800">
-                        {offer.buyerName}
-                      </p>
-                      <p className="text-sm text-gray-500">{offer.message}</p>
-                    </div>
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full font-medium ${statusColor(offer.status)}`}
-                    >
-                      {offer.status}
-                    </span>
-                  </div>
-                  <p className="text-blue-600 font-bold text-lg mb-3">
-                    ${offer.offerAmount.toLocaleString()}
-                  </p>
-                  {offer.status === "Pending" && (
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() =>
-                          handleAction(offer.id, "accept", selectedListing)
-                        }
-                        className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm py-1.5 rounded-lg transition"
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleAction(offer.id, "reject", selectedListing)
-                        }
-                        className="flex-1 bg-red-500 hover:bg-red-600 text-white text-sm py-1.5 rounded-lg transition"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  )}
-                </div>
+                  offer={offer}
+                  onAccept={() =>
+                    handleAction(offer.id, "accept", selectedListing)
+                  }
+                  onReject={() =>
+                    handleAction(offer.id, "reject", selectedListing)
+                  }
+                />
               ))}
             </div>
           )}

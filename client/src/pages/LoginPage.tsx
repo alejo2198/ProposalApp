@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.tsx";
 import api from "../api/axios.ts";
+import AuthForm from "../components/UI/Form/AuthForm.tsx";
+import FormGroup from "../components/UI/Form/FormGroup.tsx";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -26,55 +28,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome back</h2>
-        <p className="text-gray-500 text-sm mb-6">Sign in to PropFlow</p>
-        {error && (
-          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">
-            {error}
-          </div>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition"
-          >
-            {loading ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
-        <p className="text-sm text-gray-500 mt-4 text-center">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Register
-          </Link>
-        </p>
-      </div>
-    </div>
+    <AuthForm
+      title="Welcome back"
+      subtitle="Sign in to PropFlow"
+      error={error}
+      onSubmit={handleSubmit}
+      loading={loading}
+      submitIdleText="Sign in"
+      submitLoadingText="Signing in..."
+      footerText="Don't have an account?"
+      footerLinkText="Register"
+      footerLinkTo="/register"
+    >
+      <FormGroup
+        id="email"
+        label="Email"
+        type="email"
+        required
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+      />
+      <FormGroup
+        id="password"
+        label="Password"
+        type="password"
+        required
+        value={form.password}
+        onChange={(e) => setForm({ ...form, password: e.target.value })}
+      />
+    </AuthForm>
   );
 }
