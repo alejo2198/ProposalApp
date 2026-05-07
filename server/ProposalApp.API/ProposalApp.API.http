@@ -1,0 +1,41 @@
+@ProposalApp.API_HostAddress = https://localhost:5018
+
+### Register a new user
+POST {{ProposalApp.API_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email": "john@example.com",
+  "password": "Password123!",
+  "role": "Buyer"
+}
+
+### Login
+POST {{ProposalApp.API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "Password123!"
+}
+
+### Login - wrong password (should return 401)
+POST {{ProposalApp.API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "wrongpassword"
+}
+
+### Register duplicate email (should return 400)
+POST {{ProposalApp.API_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Jane Doe",
+  "email": "john@example.com",
+  "password": "Password123!",
+  "role": "Buyer"
+}
