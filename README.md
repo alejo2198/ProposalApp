@@ -105,16 +105,26 @@ The client starts at **`http://localhost:5173`**.
 
 The app has two distinct roles. To experience both sides of the workflow simultaneously, **open the app in two different browsers** (e.g., Chrome for one role and Firefox for the other) so each session has its own independent authentication state.
 
+### Seed Data (Created Automatically)
+
+When the API starts against an empty database, the app seeds:
+
+- **3 active listings**
+- **2 user accounts**
+  - Agent: `mike@propflow.com` / `Password123!`
+  - Buyer: `jane@propflow.com` / `Password123!`
+
+> If your database already has listings, the seeder is skipped.
+
 ### Role 1 — Agent (Chrome)
 
-1. Go to `http://localhost:5173` and register a new account, selecting **Agent** as the role.
+1. Go to `http://localhost:5173` and sign in as the seeded Agent account.
 2. After logging in, you land on the **Agent Dashboard**.
-3. Create one or more property listings.
-4. Click **Listen** on any listing to subscribe to real-time offer notifications via WebSocket.
+3. Review the seeded listings and open one to watch incoming offers.
 
 ### Role 2 — Buyer (Firefox)
 
-1. Go to `http://localhost:5173` in Firefox and register a separate account, selecting **Buyer** as the role.
+1. Go to `http://localhost:5173` in Firefox and sign in as the seeded Buyer account.
 2. After logging in, you land on the **Listings** page.
 3. Browse available properties and click on one to open the **Make an Offer** modal.
 4. Submit an offer — the Agent browser should receive a toast notification instantly.
@@ -127,7 +137,7 @@ The app has two distinct roles. To experience both sides of the workflow simulta
 | 2    | —                                   | Accepts, rejects, or counters the offer |
 | 3    | Offer status updates on "My Offers" | Dashboard reflects the updated state    |
 
-> **Tip:** You can register as many Buyer and Agent accounts as needed. Agents see offers across all listings; Buyers only see their own.
+> **Tip:** You can still register additional Buyer and Agent accounts if needed. Agents see offers across all listings; Buyers only see their own.
 
 ---
 
